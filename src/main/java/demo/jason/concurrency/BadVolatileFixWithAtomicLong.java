@@ -3,18 +3,19 @@ package demo.jason.concurrency;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Key point:
- * 1. volatile only guarantee the memory visibility, not the operation atomic
- * 2. while synchronized can guarantee both
+ * 1) Using AtomicXXXX will get better performance than synchronized so long as
+ * it can work well.
  * Created by jason on 6/1/14.
  */
-public class BadVolatileUsageFix {
-    private static long sequenceNumber = 1;
+public class BadVolatileFixWithAtomicLong {
+    private static AtomicLong sequenceNumber = new AtomicLong(0);
 
-    public static synchronized long getSequenceNumber() {
-        return sequenceNumber++;
+    public static long getSequenceNumber() {
+        return sequenceNumber.incrementAndGet();
     }
 
     public static void main(String[] args) throws InterruptedException {
