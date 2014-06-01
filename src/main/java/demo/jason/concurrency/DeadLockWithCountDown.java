@@ -1,4 +1,4 @@
-package demo.jason;
+package demo.jason.concurrency;
 
 import java.util.concurrent.CountDownLatch;
 
